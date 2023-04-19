@@ -2,10 +2,10 @@
 
 namespace App\API\Controller;
 
-use App\Domain\Entity\User;
+use App\Kernel\Application\ICommandBus;
+use App\Application\Command\Register\RegisterCommandInput;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -13,13 +13,23 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 final class UserController extends AbstractController
 {
+    public function __construct(
+        private readonly ICommandBus $commandBus,
+    ) {}
+
     /**
      * @Route("/", methods={"GET"}, name="users_get_all")
      */
-    public function GetAll(ManagerRegistry $doctrine) : JsonResponse
+    public function GetAll() : JsonResponse
     {
-        $users = $doctrine->getRepository(User::class)->findAll();
+        $result = $this->commandBus->dispatch(
+            new RegisterCommandInput(
+                "Alex",
+                "alex.batista@infinitycopy.ai",
+                "alex",
+                "123456")
+        );
 
-        return new JsonResponse($users);
+        return new JsonResponse("");
     }
 }

@@ -30,6 +30,13 @@ final class User extends Entity implements UserInterface, PasswordAuthenticatedU
     #[ORM\Column(type: 'json')]
     private array $roles = [];
 
+    public function __construct(string $name, string $email, string $username, string $password) {
+        $this->name = $name;
+        $this->email = $email;
+        $this->username = $username;
+        $this->password = $password;
+    }
+
     public function getName(): ?string
     {
         return $this->name;
