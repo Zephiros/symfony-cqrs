@@ -21,4 +21,14 @@ class UserRepository extends ServiceEntityRepository implements IUserRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    public function list() : array
+    {
+        return $this->findAll();
+    }
+
+    public function get(int $id) : ?User
+    {
+        return $this->find($id);
+    }
 }

@@ -2,34 +2,60 @@
 
 namespace App\API\Controller;
 
+use App\Application\Query\GetUsers\GetUsersQueryInput;
+use App\Kernel\API\ApiResponse;
+use App\Kernel\API\BaseController;
 use App\Kernel\Application\ICommandBus;
-use App\Application\Command\Register\RegisterCommandInput;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Kernel\Application\IQueryBus;
 use Symfony\Component\Routing\Annotation\Route;
+
+use App\Application\Command\Register\RegisterCommandInput;
+use App\Application\Query\GetUserById\GetUserByIdQueryInput;
 
 /**
  * @Route("/users", name="users")
  */
-final class UserController extends AbstractController
+final class UserController extends BaseController
 {
     public function __construct(
         private readonly ICommandBus $commandBus,
-    ) {}
+        private readonly IQueryBus $queryBus
+    ) { parent::__construct(); }
 
     /**
-     * @Route("/", methods={"GET"}, name="users_get_all")
+     * @Route("/", methods={"POST"}, name="users_register")
      */
-    public function GetAll() : JsonResponse
+    public function Register() : ApiResponse
     {
-        $result = $this->commandBus->dispatch(
-            new RegisterCommandInput(
-                "Alex",
-                "alex.batista@infinitycopy.ai",
-                "alex",
-                "123456")
-        );
+        $command = new RegisterCommandInput(
+            "Bruna",
+            "alex.batista@infinitycopy.ai",
+            "bruna",
+            "123456");
+        $result = $this->commandBus->dispatch($command);
 
-        return new JsonResponse("");
+        return $this->HandleResult($result);
+    }
+
+    /**
+     * @Route("/", methods={"GET"}, name="users_list")
+     */
+    public function List() : ApiResponse
+    {
+        $query = new GetUsersQueryInput();
+        $result = $this->queryBus->ask($query);
+
+        return $this->HandleResult($result);
+    }
+
+    /**
+     * @Route("/{id}", methods={"GET"}, name="users_get")
+     */
+    public function Get(string $id) : ApiResponse
+    {
+        $query = new GetUserByIdQueryInput($id);
+        $result = $this->queryBus->ask($query);
+
+        return $this->HandleResult($result);
     }
 }

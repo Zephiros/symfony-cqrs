@@ -4,7 +4,6 @@ namespace App\Application\Command\Register;
 
 use App\Domain\Entity\User;
 use App\Domain\Repository\IUserRepository;
-use App\Kernel\Application\ICommand;
 use App\Kernel\Application\ICommandHandler;
 
 final class RegisterCommandHandler implements ICommandHandler
@@ -13,16 +12,16 @@ final class RegisterCommandHandler implements ICommandHandler
         private readonly IUserRepository $userRepository
     ) {}
 
-    public function __invoke(ICommand $commandInput) : ?RegisterCommandResult
+    public function __invoke(RegisterCommandInput $command) : ?RegisterCommandResult
     {
         $user = new User(
-            $commandInput->getName(),
-            $commandInput->getEmail(),
-            $commandInput->getUsername(),
-            $commandInput->getPassword()
+            $command->getName(),
+            $command->getEmail(),
+            $command->getUsername(),
+            $command->getPassword()
         );
 
-        $this->userRepository->add($user);
+        $this->userRepository->add($user, true);
 
         return new RegisterCommandResult($user->getId());
     }
