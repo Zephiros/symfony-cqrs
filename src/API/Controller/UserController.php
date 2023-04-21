@@ -7,6 +7,7 @@ use App\Kernel\API\ApiResponse;
 use App\Kernel\API\BaseController;
 use App\Kernel\Application\ICommandBus;
 use App\Kernel\Application\IQueryBus;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 use App\Application\Command\Register\RegisterCommandInput;
@@ -25,13 +26,11 @@ final class UserController extends BaseController
     /**
      * @Route("/", methods={"POST"}, name="users_register")
      */
-    public function Register() : ApiResponse
+    public function Register(Request $request) : ApiResponse
     {
-        $command = new RegisterCommandInput(
-            "Bruna",
-            "alex.batista@infinitycopy.ai",
-            "bruna",
-            "123456");
+        $data = json_decode($request->getContent());
+
+        $command = new RegisterCommandInput($data->name, $data->email, $data->username, $data->password);
         $result = $this->commandBus->dispatch($command);
 
         return $this->HandleResult($result);

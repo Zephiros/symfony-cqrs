@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 class SimplyAuditableEntity extends Entity implements ISimplyAuditableEntity
 {
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(name: 'created_at', type: 'datetime')]
     protected DateTime $createdAt;
 
     public function getCreatedAt(): ?DateTime

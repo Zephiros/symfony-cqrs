@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 class AuditableEntity extends SimplyAuditableEntity implements IAuditableEntity
 {
-    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[ORM\Column(name: 'updated_at', type: 'datetime', nullable: true)]
     protected ?DateTime $updatedAt;
 
     #[ORM\PrePersist]

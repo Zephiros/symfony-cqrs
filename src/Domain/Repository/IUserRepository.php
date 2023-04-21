@@ -3,6 +3,7 @@
 namespace App\Domain\Repository;
 
 use App\Domain\Entity\User;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 interface IUserRepository
 {
