@@ -3,15 +3,15 @@
 namespace App\Domain\Entity;
 
 use App\Domain\Repository\UserRepository;
-use App\Kernel\Domain\Entity;
-
+use App\Kernel\Domain\AuditableEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`User`')]
-final class User extends Entity implements UserInterface, PasswordAuthenticatedUserInterface
+#[ORM\HasLifecycleCallbacks]
+final class User extends AuditableEntity implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Column(type: 'string', length: 255)]
     private string $name;
