@@ -2,7 +2,6 @@
 
 namespace App\API\Controller;
 
-use App\Application\Query\GetUsers\GetUsersQueryInput;
 use App\Kernel\API\ApiResponse;
 use App\Kernel\API\BaseController;
 use App\Kernel\Application\ICommandBus;
@@ -11,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 use App\Application\Command\Register\RegisterCommandInput;
+
+use App\Application\Query\GetUsers\GetUsersQueryInput;
 use App\Application\Query\GetUserById\GetUserByIdQueryInput;
 
 /**

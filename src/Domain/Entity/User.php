@@ -2,11 +2,12 @@
 
 namespace App\Domain\Entity;
 
-use App\Domain\Repository\UserRepository;
 use App\Kernel\Domain\AuditableEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+
+use App\Infra\Repository\UserRepository;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`User`')]
@@ -19,18 +20,22 @@ final class User extends AuditableEntity implements UserInterface, PasswordAuthe
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $email;
 
-    // username collumn
     #[ORM\Column(type: 'string', length: 255)]
     private string $username;
 
-    // password collumn
     #[ORM\Column(type: 'string', length: 255)]
     private string $password;
 
     #[ORM\Column(type: 'json')]
     private array $roles = [];
 
-    public function __construct(string $name, string $email, string $username, string $password) {
+    // User Setting
+    #[ORM\OneToOne(targetEntity: UserSetting::class, cascade: ["persist", "remove"])]
+    #[ORM\JoinColumn(name: '`UserSettingId`', referencedColumnName: '`id`', nullable: true)]
+    private UserSetting $userSetting;
+
+    public function __construct(string $name, string $email, string $username, string $password)
+    {
         $this->name = $name;
         $this->email = $email;
         $this->username = $username;
@@ -57,6 +62,18 @@ final class User extends AuditableEntity implements UserInterface, PasswordAuthe
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getUserSetting(): ?UserSetting
+    {
+        return $this->userSetting;
+    }
+
+    public function setUserSetting(UserSetting $userSetting): self
+    {
+        $this->userSetting = $userSetting;
 
         return $this;
     }
