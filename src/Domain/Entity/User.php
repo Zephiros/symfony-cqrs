@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use App\Infra\Repository\UserRepository;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\Table(name: '`User`')]
+#[ORM\Table(name: '`users`')]
 #[ORM\HasLifecycleCallbacks]
 final class User extends AuditableEntity implements UserInterface, PasswordAuthenticatedUserInterface
 {

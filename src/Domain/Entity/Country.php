@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Infra\Repository\CountryRepository;
 
 #[ORM\Entity(repositoryClass: CountryRepository::class)]
-#[ORM\Table(name: '`Country`')]
+#[ORM\Table(name: '`countries`')]
 #[ORM\HasLifecycleCallbacks]
 final class Country extends Entity
 {

@@ -10,7 +10,7 @@ use Doctrine\Persistence\ObjectManager;
 class CountryFixtures extends Fixture
 {
     public function __construct(
-        private readonly CountryRepository $userRepository
+        private readonly CountryRepository $countryRepository
     ) {}
 
     public function list(): array
@@ -26,7 +26,7 @@ class CountryFixtures extends Fixture
         $countries = $this->list();
 
         foreach ($countries as $country) {
-            if (!$this->userRepository->findOneBy(["code" => $country->getCode()]))
+            if (!$this->countryRepository->findOneBy(["code" => $country->getCode()]))
                 $manager->persist($country);
         }
 

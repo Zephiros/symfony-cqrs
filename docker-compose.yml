@@ -2,7 +2,7 @@ version: '3.5'
 
 services:
   symfony.cqrs.database:
-    container_name: "symfony_cqrs_database"
+    container_name: "symfony.cqrs.database"
     image: postgres:${POSTGRES_VERSION:-15}-alpine
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-app}
@@ -15,9 +15,26 @@ services:
     ports:
       - "5433:5432"
 
+  symfony.cqrs.test-database:
+    container_name: "symfony.cqrs.test-database"
+    image: postgres:${POSTGRES_VERSION:-15}-alpine
+    environment:
+      POSTGRES_DB: "cqrs_test"
+      POSTGRES_PASSWORD: "password"
+      POSTGRES_USER: "test"
+    volumes:
+      - symfony.cqrs.test-database:/var/lib/postgresql/data:rw
+    networks:
+      - symfony.cqrs.network
+    ports:
+      - "5434:5432"
+
 volumes:
   symfony.cqrs.database:
     name: symfony.cqrs.database
+    external: false
+  symfony.cqrs.test-database:
+    name: symfony.cqrs.test-database
     external: false
 
 networks:

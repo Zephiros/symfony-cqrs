@@ -8,6 +8,7 @@ use App\Kernel\Application\ICommandBus;
 use App\Kernel\Application\IQueryBus;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use OpenApi\Annotations as OA;
 
 use App\Application\Command\Register\RegisterCommandInput;
 
@@ -16,6 +17,7 @@ use App\Application\Query\GetUserById\GetUserByIdQueryInput;
 
 /**
  * @Route("/users", name="users")
+ * @OA\Tag(name="Users")
  */
 final class UserController extends BaseController
 {

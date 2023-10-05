@@ -6,11 +6,13 @@ use App\Kernel\API\ApiResponse;
 use App\Kernel\API\BaseController;
 use App\Kernel\Application\IQueryBus;
 use Symfony\Component\Routing\Annotation\Route;
+use OpenApi\Annotations as OA;
 
 use App\Application\Query\GetCountries\GetCountriesQueryInput;
 
 /**
  * @Route("/countries", name="countries")
+ * @OA\Tag(name="Countries")
  */
 final class CountryController extends BaseController
 {

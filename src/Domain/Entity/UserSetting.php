@@ -9,9 +9,9 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Infra\Repository\UserSettingRepository;
 
 #[ORM\Entity(repositoryClass: UserSettingRepository::class)]
-#[ORM\Table(name: '`UserSetting`')]
+#[ORM\Table(name: '`user_settings`')]
 #[ORM\HasLifecycleCallbacks]
-final class UserSetting extends SimplyAuditableEntity
+class UserSetting extends SimplyAuditableEntity
 {
     #[ORM\Column(type: 'integer', enumType: Theme::class)]
     private Theme $theme;

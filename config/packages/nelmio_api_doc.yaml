@@ -1,0 +1,11 @@
+nelmio_api_doc:
+    documentation:
+        info:
+            title: Symfony CQRS
+            description: Symfony CQRS Documentation!
+            version: 1.0.0
+    areas:
+        path_patterns:
+            # Accepts routes under /api except /api/doc or /api/doc.json
+            - ^/api(?!/doc|/doc.json).*
+
